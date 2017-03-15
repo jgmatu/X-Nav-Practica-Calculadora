@@ -1,0 +1,30 @@
+body {
+      margin: 50px;
+}
+
+.container {
+      height: 360px;
+      width: 320px;
+      border: 20px solid;
+      border-radius: 20px;
+      border-style : solid;
+      border-color : rgba(21, 11, 11, 0.2);
+}
+
+.row {
+      margin-bottom: 10px;
+}
+
+.button {
+      text-align: center;
+}
+
+#display {
+      margin: 5px;
+      padding: 20px;
+      border: 5px solid;
+      border-radius: 20px;
+      border-style : solid;
+      border-color : black;
+      text-align: right;
+}
