@@ -28,6 +28,7 @@ $( document ).ready(function() {
                   realizeOperation(op);
                   setResult();
                   showDisplay();
+                  saveLastOp();
                   eraseInput();
                   op = id;
             }
@@ -48,7 +49,9 @@ $( document ).ready(function() {
                   realizeOperation(op);
                   setResult();
                   showDisplay();
+                  saveLastOp();
                   eraseInput();
+                  op = id;
             }
 
             if (id == DECIMAL && !decimal) {
@@ -58,7 +61,7 @@ $( document ).ready(function() {
       });
 
       var eraseInput = function () {
-            result = 0;
+            numDisplayed = 0;
             sign = false;
             decimal = false;
             ndecimal = BASE;
@@ -76,7 +79,7 @@ $( document ).ready(function() {
       }
 
       var isResult = function (id) {
-            return id == EQUALS;
+            return id == EQUALS && op != EQUALS;
       }
 
       var isNumb = function (id) {
@@ -99,6 +102,7 @@ $( document ).ready(function() {
             } else {
                   b = numDisplayed;
             }
+            console.log("a : " + a + " b : " + b);
       }
 
       var saveLastOp = function () {
@@ -211,5 +215,7 @@ $( document ).ready(function() {
             decimal = localStorage.getItem("decimal") == "true";
             ndecimal = parseFloat(localStorage.getItem("ndecimal"));
             sign = localStorage.getItem("sign") == "true";
+
+            numDisplayed = result;
       }
 });
