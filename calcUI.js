@@ -23,7 +23,7 @@ $( document ).ready( function() {
             var color = cfg[nCfg][COLOR];
 
             nCfg = nCfg + 1;
-            var button = '<div class="col-md-3"> \
+            var button = '<div class="col-md-3 col-xs-3 col-sm-3"> \
                               <div id="' + id + '" class ="button"> \
                                     <button type="button" class="btn btn-block ' + color + '">' + name + '</button> \
                               </div> \

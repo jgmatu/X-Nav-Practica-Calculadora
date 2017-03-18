@@ -23,16 +23,16 @@ const OPERATIONSTWO = [
       [PLUS   , function (a , b) { return a + b; } , '+'],
       [DIVIDE , function (a , b) { return a / b; } , '/'],
       [MULT   , function (a , b) { return a * b; }      , 'x'],
-      [POWN   , function (a , b) { return Math.pow(a, b); }, 'powN' ]
+      [POWN   , function (a , b) { return Math.pow(a, b); }, 'pow' ]
 ];
 
 const OPERATIONONE = [
-      [SIN  , function (a) { return Math.sin (a);   } ,  'sin'],
-      [COS  , function (a) { return Math.cos (a);   } ,  'cos'],
-      [SQRT , function (a) { return Math.sqrt(a);   } , 'sqrt'],
-      [LOG  , function (a) { return Math.log10 (a); } ,'log10'],
-      [TAN  , function (a) { return Math.tan (a);   } ,  'tan'],
-      [POW2 , function (a) { return Math.pow (2, a);} , 'pow2']
+      [SIN  , function (a) { return Math.sin (a);    } ,  'sin'],
+      [COS  , function (a) { return Math.cos (a);    } ,  'cos'],
+      [SQRT , function (a) { return Math.sqrt(a);    } , 'sqrt'],
+      [LOG  , function (a) { return Math.log10 (a);  } ,'log10'],
+      [TAN  , function (a) { return Math.tan (a);    } ,  'tan'],
+      [POW2 , function (a) { return Math.pow (a, 2); } , 'pow2 ']
 ];
 
 const OPERATES = OPERATIONONE.concat(OPERATIONSTWO);
