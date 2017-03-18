@@ -13,7 +13,7 @@ var SciFY = [
 var nCfg = 0;
 
 $( document ).ready( function() {
-      $ ( "body" ).append('<div id ="calc" class="container"></div>');
+      $ ( "body" ).append('<div id ="calc" class="container responsive"></div>');
       $ ( "#SciFY" ).show();
       $ ( "#Basic" ).hide();
 
@@ -81,6 +81,4 @@ $( document ).ready( function() {
                   $("#r" + i).hide();
             }
       });
-
-
 });

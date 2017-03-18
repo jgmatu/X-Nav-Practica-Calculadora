@@ -37,7 +37,6 @@ $( document ).ready(function() {
             if (isNumb(id)) {
                   var number = $("#" + id).text();
 
-                  console.log(number)
                   if (op == EQUALS) {
                         resetDisplay();
                         reset();
@@ -64,9 +63,10 @@ $( document ).ready(function() {
             }
       }
 
-      var makeOperation = function () {
+      var makeOperation = function (id) {
             setNumbersOp();
-            realizeOperation(op);
+            realizeOperationTwoOperands(op);
+            realizeOperationOneOperand(id);
             setResult();
             saveLastOp();
             showDisplay();
@@ -106,7 +106,8 @@ $( document ).ready(function() {
       }
 
       var isOperate = function (id) {
-            return id == LESS || id == PLUS || id == DIVIDE || id == MULT;
+            return id == LESS || id == PLUS || id == DIVIDE || id == MULT ||
+                        id == SIN || id == COS || id == TAN || id == SQRT || id == LOG;
       }
 
       var setNumbersOp = function () {
@@ -125,26 +126,21 @@ $( document ).ready(function() {
             }
       }
 
-      var realizeOperation = function (id) {
-            if (id == PLUS) {
-                  result = a + b;
-                  console.log(a + " + " + b + " = " + result);
-                  saveLastOp();
+      var realizeOperationOneOperand = function (id) {
+            for (var i = 0 ; i < OPERATIONONE.length ; i++) {
+                  if (OPERATIONONE[i][IDOP] == id){
+                        var operation = OPERATIONONE[i][FUNCOP];
+                        result = operation(a);
+                  }
             }
-            if (id == LESS) {
-                  result = a - b;
-                  console.log(a + " - " + b + " = " + result);
-                  saveLastOp();
-            }
-            if (id == MULT) {
-                  result = a * b;
-                  console.log(a + " * " + b + " = " + result);
-                  saveLastOp();
-            }
-            if (id == DIVIDE) {
-                  result = a / b;
-                  console.log(a + " / " + b + " = " + result);
-                  saveLastOp();
+      }
+
+      var realizeOperationTwoOperands = function (id) {
+            for (var i = 0 ; i < OPERATIONSTWO.length ; i++) {
+                  if (OPERATIONSTWO[i][IDOP] == id){
+                        var operation = OPERATIONSTWO[i][FUNCOP];
+                        result = operation(a , b);
+                  }
             }
       }
 
