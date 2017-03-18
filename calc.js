@@ -7,6 +7,7 @@ $( document ).ready(function() {
       var decimal = false;
       var ndecimal = BASE;
       var sign = false;
+      var numb = false;
 
       $( ".button" ).click(function() {
             var id = $(this).attr('id');
@@ -34,6 +35,7 @@ $( document ).ready(function() {
       }
 
       var clickNumb = function (id) {
+            numb = true;
             if (isNumb(id)) {
                   var number = $("#" + id).text();
 
@@ -41,9 +43,9 @@ $( document ).ready(function() {
                         resetDisplay();
                         reset();
                   }
-
                   setNumDisplay(number);
                   showDisplay();
+                  numb = false;
             }
       }
 
@@ -56,23 +58,18 @@ $( document ).ready(function() {
 
       var clickDecimals = function (id) {
             if (id == DECIMAL && !decimal) {
-                  if (numDisplayed == 0) {
-                        resetDisplay();
-                        $ ("#display").append(".");
-                  }
+                  $ ("#display").append(".");
                   decimal = true;
             }
       }
 
       var makeOperation = function (id) {
             setNumbersOp();
-
             opTwoOperands(op);
             opOneOperand(id);
 
             numDisplayed = result;
             showDisplay();
-
             eraseInput();
       }
 
@@ -126,13 +123,6 @@ $( document ).ready(function() {
             // console.log("a : " + a + " b : " + b);
       }
 
-      var saveLastOp = function () {
-            if (a != 0 && b != 0) {
-                  a = result;
-                  b = 0;
-            }
-      }
-
       var opOneOperand = function (id) {
             for (var i = 0 ; i < OPERATIONONE.length ; i++) {
                   if (OPERATIONONE[i][IDOP] == id){
@@ -150,7 +140,8 @@ $( document ).ready(function() {
                         var operation = OPERATIONSTWO[i][FUNCOP];
                         result = operation(a , b);
                         $("#text").text(a + " " + OPERATIONSTWO[i][TEXT] + " " + b +  " = " + result);
-                        saveLastOp();
+                        a = result;
+                        b = 0;
                   }
             }
       }
@@ -158,7 +149,7 @@ $( document ).ready(function() {
       var reset = function () {
             a = b = result = numDisplayed = 0;
             op = "";
-            sign = decimal = false;
+            sign = decimal = numb = false;
             ndecimal = BASE;
       }
 
@@ -193,7 +184,8 @@ $( document ).ready(function() {
       var showDisplay = function () {
             var n = numDisplayed - Math.floor(numDisplayed);
 
-            if (decimal && n == 0) {
+            console.log(numb);
+            if (decimal && n == 0 && numb) {
                   $( "#display" ).append("0");
             } else {
                   $( "#display" ).text(numDisplayed);
