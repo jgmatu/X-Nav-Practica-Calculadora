@@ -11,6 +11,7 @@ body {
 
 #text {
       margin: 5px;
+      padding: 10px;
       text-align: right;
 }
 
@@ -32,7 +33,7 @@ body {
 }
 
 #display {
-      margin: 0px;
+      margin-bottom: 10px;
       padding: 10px;
       border: 5px solid;
       border-radius: 20px;
