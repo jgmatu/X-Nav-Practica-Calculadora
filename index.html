@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
       <head>
             <meta charset="utf-8">
@@ -14,144 +13,14 @@
                   crossorigin="anonymous">
             </script>
 
+
+            <script type="text/javascript" src="calcConst.js"></script>
+            <script type="text/javascript" src="calcUI.js"></script>
             <script type="text/javascript" src="calc.js"></script>
       </head>
       <body>
-            <div class="container">
-                  <div class= "row">
-                        <div class="col-md-12">
-                              <div id ="display">
-                                    0
-                              </div>
-                        </div>
-                  </div>
-
-                  <div class="row">
-                        <div class="col-md-3">
-                              <div id = "sign" class="button">
-                                    <button type="button" class="btn btn-block btn-warning">+/-</button>
-                              </div>
-                        </div>
-                        <div class="col-md-3">
-                              <div id = "save" class="button">
-                                    <button type="button" class="btn btn-block btn-primary">M+</button>
-                              </div>
-                        </div>
-                        <div class="col-md-3">
-                              <div id = "load" class="button">
-                                    <button type="button" class="btn btn-block btn-warning">M</button>
-                              </div>
-                        </div>
-                        <div class="col-md-3">
-                              <div id = "reset" class="button">
-                                    <button type="button" class="btn btn-block btn-danger">CE</button>
-                              </div>
-                        </div>
-                  </div>
-
-                  <div class="row">
-                        <div class="col-md-3">
-                              <div  id = "7" class="button">
-                                    <button type="button" class="btn btn-block btn-success">7</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id = "8" class="button">
-                                    <button type="button" class="btn btn-block btn-success">8</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div  id = "9" class="button">
-                                    <button type="button" class="btn btn-block btn-success">9</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id = "plus" class="button">
-                                    <button type="button" class="btn btn-block btn-info">+</button>
-                              </div>
-                        </div>
-                  </div>
-
-                  <div class="row">
-                        <div class="col-md-3">
-                              <div id = "4" class="button">
-                                    <button type="button" class="btn btn-block btn-success">4</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id = "5" class="button">
-                                    <button type="button" class="btn btn-block btn-success">5</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id = "6" class="button">
-                                    <button type="button" class="btn btn-block btn-success">6</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id = "less" class="button">
-                                    <button type="button" class="btn btn-block btn-info">-</button>
-                              </div>
-                        </div>
-                  </div>
-
-                  <div class="row">
-                        <div class="col-md-3">
-                              <div id = "1" class="button">
-                                    <button type="button" class="btn btn-block btn-success">1</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id = "2" class="button">
-                                    <button type="button" class="btn btn-block btn-success">2</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div  id = "3" class="button">
-                                    <button type="button" class="btn btn-block btn-success">3</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id ="mult" class="button">
-                                    <button type="button" class="btn btn-block btn-info">x</button>
-                              </div>
-                        </div>
-                  </div>
-
-                  <div class="row">
-                        <div class="col-md-3">
-                              <div id = "0" class="button">
-                                    <button type="button" class="btn btn-block btn-success">0</button>
-                              </div>
-                        </div>
-                        <div class="col-md-3">
-                              <div id = "decimal" class="button">
-                                    <button type="button" class="btn btn-block btn-success">.</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id="equals" class="button">
-                                    <button type="button" class="btn btn-block btn-info">=</button>
-                              </div>
-                        </div>
-
-                        <div class="col-md-3">
-                              <div id ="divide" class="button">
-                                    <button type="button" class="btn btn-block btn-info">/</button>
-                              </div>
-                        </div>
-                  </div>
-            </div>
+            <input id="SciFY" type="button" value="SciFY"/>
+            <input id="Basic" type="button" value="Basic"/>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
       </body>
 </html>

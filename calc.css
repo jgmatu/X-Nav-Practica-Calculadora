@@ -2,9 +2,9 @@ body {
       margin: 50px;
 }
 
-.container {
-      height: 360px;
-      width: 320px;
+#calc {
+      height: 440px;
+      width: 480px;
       border: 20px solid;
       border-radius: 20px;
       border-style : solid;

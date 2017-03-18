@@ -1,9 +1,3 @@
-const LOAD = "load", SAVE = "save", RESET = "reset", SIGN = "sign";
-
-const LESS = "less", PLUS = "plus", DIVIDE = "divide";
-const MULT = "mult", EQUALS = "equals", DECIMAL = "decimal";
-const BASE = 10;
-
 $( document ).ready(function() {
       var numDisplayed = 0;
       var a = 0;
@@ -17,48 +11,67 @@ $( document ).ready(function() {
       $( ".button" ).click(function() {
             var id = $(this).attr('id');
 
+            clickControl(id);
+            clickOperation(id);
+            clickNumb(id);
+            clickPi(id);
+            clickDecimals(id);
+      });
+
+      var clickControl = function (id) {
             if (isControl(id)) {
                   setControlCalc(id);
                   decimal = false;
                   ndecimal = BASE;
             }
+      }
 
-            if (isOperate(id)) {
-                  setNumbersOp();
-                  realizeOperation(op);
-                  setResult();
-                  showDisplay();
-                  saveLastOp();
-                  eraseInput();
+      var clickOperation = function (id) {
+            if (isOperate(id) || isResult(id)) {
+                  makeOperation(id);
                   op = id;
             }
+      }
 
+      var clickNumb = function (id) {
             if (isNumb(id)) {
-                  var number = $(this).text();
+                  var number = $("#" + id).text();
 
+                  console.log(number)
                   if (op == EQUALS) {
                         resetDisplay();
                         reset();
                   }
+
                   setNumDisplay(number);
                   showDisplay();
             }
+      }
 
-            if (isResult(id)) {
-                  setNumbersOp();
-                  realizeOperation(op);
-                  setResult();
+      var clickPi = function (id) {
+            if (id == PI) {
+                  numDisplayed = Math.PI;
                   showDisplay();
-                  saveLastOp();
-                  eraseInput();
-                  op = id;
             }
+      }
 
+      var clickDecimals = function (id) {
             if (id == DECIMAL && !decimal) {
+                  if (numDisplayed == 0) {
+                        resetDisplay();
+                  }
                   decimal = true;
-                  $ ("#display").append($(this).text());
             }
-      });
+      }
+
+      var makeOperation = function () {
+            setNumbersOp();
+            realizeOperation(op);
+            setResult();
+            saveLastOp();
+            showDisplay();
+            eraseInput();
+      }
 
       var eraseInput = function () {
             numDisplayed = 0;
@@ -102,7 +115,7 @@ $( document ).ready(function() {
             } else {
                   b = numDisplayed;
             }
-            console.log("a : " + a + " b : " + b);
+            // console.log("a : " + a + " b : " + b);
       }
 
       var saveLastOp = function () {
@@ -161,6 +174,7 @@ $( document ).ready(function() {
             }
             if (id == SIGN) {
                   sign = !sign;
+                  numDisplayed *= -1;
                   showDisplay();
             }
        }
@@ -216,6 +230,8 @@ $( document ).ready(function() {
             ndecimal = parseFloat(localStorage.getItem("ndecimal"));
             sign = localStorage.getItem("sign") == "true";
 
-            numDisplayed = result;
+            if (numDisplayed == 0 && result != 0) {
+                  numDisplayed = result;
+            }
       }
 });
