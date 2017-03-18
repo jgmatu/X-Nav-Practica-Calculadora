@@ -16,6 +16,7 @@ $( document ).ready(function() {
             clickNumb(id);
             clickPi(id);
             clickDecimals(id);
+
       });
 
       var clickControl = function (id) {
@@ -65,11 +66,13 @@ $( document ).ready(function() {
 
       var makeOperation = function (id) {
             setNumbersOp();
-            realizeOperationTwoOperands(op);
-            realizeOperationOneOperand(id);
-            setResult();
-            saveLastOp();
+
+            opTwoOperands(op);
+            opOneOperand(id);
+
+            numDisplayed = result;
             showDisplay();
+
             eraseInput();
       }
 
@@ -106,8 +109,12 @@ $( document ).ready(function() {
       }
 
       var isOperate = function (id) {
-            return id == LESS || id == PLUS || id == DIVIDE || id == MULT ||
-                        id == SIN || id == COS || id == TAN || id == SQRT || id == LOG;
+            for (var i = 0 ; i < OPERATES.length; i++) {
+                  if (OPERATES[i][IDOP] == id) {
+                        return true;
+                  }
+            }
+            return false;
       }
 
       var setNumbersOp = function () {
@@ -126,27 +133,26 @@ $( document ).ready(function() {
             }
       }
 
-      var realizeOperationOneOperand = function (id) {
+      var opOneOperand = function (id) {
             for (var i = 0 ; i < OPERATIONONE.length ; i++) {
                   if (OPERATIONONE[i][IDOP] == id){
                         var operation = OPERATIONONE[i][FUNCOP];
                         result = operation(a);
+                        $("#text").text(OPERATIONONE[i][TEXT] + "(" + a + ") " + " = " + result);
+                        a = result;
                   }
             }
       }
 
-      var realizeOperationTwoOperands = function (id) {
+      var opTwoOperands = function (id) {
             for (var i = 0 ; i < OPERATIONSTWO.length ; i++) {
                   if (OPERATIONSTWO[i][IDOP] == id){
                         var operation = OPERATIONSTWO[i][FUNCOP];
                         result = operation(a , b);
+                        $("#text").text(a + " " + OPERATIONSTWO[i][TEXT] + " " + b +  " = " + result);
+                        saveLastOp();
                   }
             }
-      }
-
-      var setResult = function () {
-            numDisplayed = result;
-            saveLastOp();
       }
 
       var reset = function () {
@@ -177,6 +183,7 @@ $( document ).ready(function() {
 
       var resetDisplay = function () {
             $( "#display" ).text("0");
+            $("#text").text("0");
       }
 
       var getIntValueNode = function (node) {

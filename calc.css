@@ -9,6 +9,11 @@ body {
       border-color : rgba(21, 11, 11, 0.2);
 }
 
+#text {
+      margin: 5px;
+      text-align: right;
+}
+
 .row {
       margin: 5px;
 }
