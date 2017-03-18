@@ -58,6 +58,7 @@ $( document ).ready(function() {
             if (id == DECIMAL && !decimal) {
                   if (numDisplayed == 0) {
                         resetDisplay();
+                        $ ("#display").append(".");
                   }
                   decimal = true;
             }
