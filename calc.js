@@ -16,7 +16,6 @@ $( document ).ready(function() {
             clickNumb(id);
             clickPi(id);
             clickDecimals(id);
-
       });
 
       var clickControl = function (id) {
