@@ -12,9 +12,9 @@ $( document ).ready(function() {
       $( ".button" ).click(function() {
             var id = $(this).attr('id');
 
+            clickNumb(id);
             clickControl(id);
             clickOperation(id);
-            clickNumb(id);
             clickPi(id);
             clickDecimals(id);
       });
@@ -35,17 +35,16 @@ $( document ).ready(function() {
       }
 
       var clickNumb = function (id) {
-            numb = true;
+            numb = false;
             if (isNumb(id)) {
                   var number = $("#" + id).text();
 
                   if (op == EQUALS) {
-                        resetDisplay();
                         reset();
                   }
+                  numb = true;
                   setNumDisplay(number);
                   showDisplay();
-                  numb = false;
             }
       }
 
@@ -155,7 +154,6 @@ $( document ).ready(function() {
 
       var setControlCalc = function (id) {
             if (id == RESET) {
-                  resetDisplay();
                   reset();
             }
             if (id == SAVE) {
@@ -163,19 +161,13 @@ $( document ).ready(function() {
             }
             if (id == LOAD) {
                   loadOp();
-                  showDisplay();
             }
             if (id == SIGN) {
                   sign = !sign;
                   numDisplayed *= -1;
-                  showDisplay();
             }
+            showDisplay();
        }
-
-      var resetDisplay = function () {
-            $( "#display" ).text("0");
-            $("#text").text("0");
-      }
 
       var getIntValueNode = function (node) {
             return parseInt(node.text());
