@@ -1,13 +1,13 @@
-const LOAD = "load", SAVE = "save", RESET = "reset", SIGN = "sign";
+const LOAD = "Escape", SAVE = "Control", RESET = " ", SIGN = "º";
+const LESS = "-", PLUS = "+", DIVIDE = "/";
 
-const LESS = "less", PLUS = "plus", DIVIDE = "divide";
-const MULT = "mult", EQUALS = "equals", DECIMAL = "decimal";
+const MULT = "*", EQUALS = "Enter", DECIMAL = ".";
 const POW2 = "pow2";
 
 const BASE = 10;
 
-const PI = "pi", SIN = "sin", COS = "cos", TAN = "tan", SQRT = "sqrt", LOG = "log";
-const POWN = "powN"
+const PI = "p", SIN = "sin", COS = "cos", TAN = "tan", SQRT = "sqrt", LOG = "log";
+const POWN = "Dead"
 
 const DANG = 'btn-danger', WARN = 'btn-warning', INFO = 'btn-info', SUCC = 'btn-success', PRI = 'btn-primary'
 

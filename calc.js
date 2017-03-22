@@ -1,40 +1,55 @@
 $( document ).ready(function() {
       var numDisplayed = 0;
-      var a = 0;
-      var b = 0;
-      var result = 0;
-      var op = "";
+      var a = null;
+      var b = null;
+      var op = "?";
       var decimal = false;
       var ndecimal = BASE;
       var sign = false;
       var numb = false;
 
+      $ ( document ).keydown(function(event) {
+            event.preventDefault();
+            var id = event.key;
+
+            eventPi(id);
+            eventNumb(id);
+
+            eventCntrl(id);
+            eventDecimals(id);
+
+            eventOp(id);
+      });
+
+
       $( ".button" ).click(function() {
             var id = $(this).attr('id');
 
-            clickNumb(id);
-            clickControl(id);
-            clickOperation(id);
-            clickPi(id);
-            clickDecimals(id);
+            eventPi(id);
+            eventNumb(id);
+
+            eventCntrl(id);
+            eventDecimals(id);
+
+            eventOp(id);
       });
 
-      var clickControl = function (id) {
+      var eventCntrl = function (id) {
             if (isControl(id)) {
                   setControlCalc(id);
-                  decimal = false;
-                  ndecimal = BASE;
             }
       }
 
-      var clickOperation = function (id) {
-            if (isOperate(id) || isResult(id)) {
-                  makeOperation(id);
+      var eventOp = function (id) {
+            if ((isOperate(id) || isResult(id)) && id != op) {
+                  numDisplayed = makeOperation(id);
+                  showDisplay();
+                  eraseInput();
                   op = id;
             }
       }
 
-      var clickNumb = function (id) {
+      var eventNumb = function (id) {
             numb = false;
             if (isNumb(id)) {
                   var number = $("#" + id).text();
@@ -48,42 +63,41 @@ $( document ).ready(function() {
             }
       }
 
-      var clickPi = function (id) {
+      var eventPi = function (id) {
             if (id == PI) {
                   numDisplayed = Math.PI;
                   showDisplay();
             }
       }
 
-      var clickDecimals = function (id) {
+      var eventDecimals = function (id) {
             if (id == DECIMAL && !decimal) {
-                  $ ("#display").append(".");
+                  $ ( "#display" ).append(".");
                   decimal = true;
             }
       }
 
       var makeOperation = function (id) {
+            var result = null;
             setNumbersOp();
-            opTwoOperands(op);
-            opOneOperand(id);
 
-            numDisplayed = result;
-            showDisplay();
-            eraseInput();
+            if (op != "?") {
+                  result = opTwoOperands(op);
+            }
+            return result;
       }
 
       var eraseInput = function () {
-            numDisplayed = 0;
             sign = false;
             decimal = false;
             ndecimal = BASE;
+            op = "?";
       }
 
       var printState = function () {
-            console.log("numDisplayed :   " + numDisplayed);
+            console.log("numDisplayed : " + numDisplayed);
             console.log("a : " + a);
             console.log("b : " + b);
-            console.log("result : " + result);
             console.log("op : " + op);
             console.log("decimal : " + decimal);
             console.log("ndecimal : " + ndecimal);
@@ -114,7 +128,7 @@ $( document ).ready(function() {
       }
 
       var setNumbersOp = function () {
-            if (a == 0) {
+            if (a == null) {
                   a = numDisplayed;
             } else {
                   b = numDisplayed;
@@ -123,6 +137,8 @@ $( document ).ready(function() {
       }
 
       var opOneOperand = function (id) {
+            var result = null;
+
             for (var i = 0 ; i < OPERATIONONE.length ; i++) {
                   if (OPERATIONONE[i][IDOP] == id){
                         var operation = OPERATIONONE[i][FUNCOP];
@@ -131,23 +147,28 @@ $( document ).ready(function() {
                         a = result;
                   }
             }
+            return result;
       }
 
       var opTwoOperands = function (id) {
+            var result = null;
+
             for (var i = 0 ; i < OPERATIONSTWO.length ; i++) {
                   if (OPERATIONSTWO[i][IDOP] == id){
                         var operation = OPERATIONSTWO[i][FUNCOP];
                         result = operation(a , b);
                         $("#text").text(a + " " + OPERATIONSTWO[i][TEXT] + " " + b +  " = " + result);
                         a = result;
-                        b = 0;
+                        b = null;
                   }
             }
+            return result;
       }
 
       var reset = function () {
-            a = b = result = numDisplayed = 0;
-            op = "";
+            a = b = null;
+            numDisplayed = 0;
+            op = "?";
             sign = decimal = numb = false;
             ndecimal = BASE;
       }
@@ -155,19 +176,28 @@ $( document ).ready(function() {
       var setControlCalc = function (id) {
             if (id == RESET) {
                   reset();
+                  showDisplay();
             }
+
+            if (id == SIGN) {
+                  swapSign();
+                  showDisplay();
+            }
+
             if (id == SAVE) {
                   saveOp();
             }
+
             if (id == LOAD) {
                   loadOp();
             }
-            if (id == SIGN) {
-                  sign = !sign;
-                  numDisplayed *= -1;
-            }
-            showDisplay();
-       }
+      }
+
+      var swapSign = function () {
+            numDisplayed *= -1;
+            a = numDisplayed;
+            sign = !sign;
+      }
 
       var getIntValueNode = function (node) {
             return parseInt(node.text());
@@ -176,11 +206,12 @@ $( document ).ready(function() {
       var showDisplay = function () {
             var n = numDisplayed - Math.floor(numDisplayed);
 
-            console.log(numb);
             if (decimal && n == 0 && numb) {
                   $( "#display" ).append("0");
-            } else {
+            } else if (numDisplayed != null) {
                   $( "#display" ).text(numDisplayed);
+            } else {
+                  $( "#display" ).text("ERROR");
             }
       }
 
@@ -200,7 +231,6 @@ $( document ).ready(function() {
             localStorage.setItem("numDisplayed", numDisplayed);
             localStorage.setItem("a", a);
             localStorage.setItem("b", b);
-            localStorage.setItem("result", result);
             localStorage.setItem("op", op);
             localStorage.setItem("decimal", decimal);
             localStorage.setItem("ndecimal", ndecimal);
@@ -211,14 +241,9 @@ $( document ).ready(function() {
             numDisplayed = parseFloat(localStorage.getItem("numDisplayed"));
             a = parseFloat(localStorage.getItem("a"));
             b = parseFloat(localStorage.getItem("b"));
-            result = parseFloat(localStorage.getItem("result"));
             op = localStorage.getItem("op");
             decimal = localStorage.getItem("decimal") == "true";
             ndecimal = parseFloat(localStorage.getItem("ndecimal"));
             sign = localStorage.getItem("sign") == "true";
-
-            if (numDisplayed == 0 && result != 0) {
-                  numDisplayed = result;
-            }
       }
 });

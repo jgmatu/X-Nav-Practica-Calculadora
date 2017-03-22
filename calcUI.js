@@ -58,8 +58,6 @@ $( document ).ready( function() {
             appendRows(ROWS, ROWS + (SciFY.length - 1) / COLS,  SciFY);
       }
 
-      createCalc();
-
       $("#SciFY").click(function() {
             $ ( this ).hide();
             $ ( "#Basic" ).show();
@@ -77,4 +75,6 @@ $( document ).ready( function() {
                   $("#r" + i).hide();
             }
       });
+      
+      createCalc();
 });
