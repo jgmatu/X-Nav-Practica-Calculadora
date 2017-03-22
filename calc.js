@@ -19,6 +19,8 @@ $( document ).ready(function() {
             eventDecimals(id);
 
             eventOp(id);
+
+            printState();
       });
 
 
@@ -41,7 +43,7 @@ $( document ).ready(function() {
       }
 
       var eventOp = function (id) {
-            if ((isOperate(id) || isResult(id)) && id != op) {
+            if ((isOperate(id) || isResult(id))) {
                   numDisplayed = makeOperation(id);
                   showDisplay();
                   eraseInput();
@@ -78,11 +80,9 @@ $( document ).ready(function() {
       }
 
       var isOneOp = function (id) {
-            console.log("IS OP??");
             for (var i = 0 ; i < OPERATIONONE.length ; i++) {
                   console.log(OPERATIONONE[i][IDOP]);
                   if (OPERATIONONE[i][IDOP] == id) {
-                        console.log(id);
                         return true;
                   }
             }
@@ -91,17 +91,30 @@ $( document ).ready(function() {
 
       var makeOperation = function (id) {
             var result = null;
-            setNumbersOp();
+
+            if (numDisplayed == null || op == EQUALS) {
+                  return;
+            }
+
+            if (a == null) {
+                  a = numDisplayed;
+            } else {
+                  b = numDisplayed;
+            }
 
             if (opOneOperand(id)) {
-                  result = opOneOperand(id);
-            } else if (op != "?") {
-                  result = opTwoOperands(op);
+                  result = opOneOperand(id, a);
+                  a = result;
+            } else if (op != "?" && a != null && b != null) {
+                  result = opTwoOperands(op, a, b);
+                  a = result;
+                  b = null
             }
             return result;
       }
 
       var eraseInput = function () {
+            numDisplayed = null;
             sign = false;
             decimal = false;
             ndecimal = BASE;
@@ -109,6 +122,7 @@ $( document ).ready(function() {
       }
 
       var printState = function () {
+            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             console.log("numDisplayed : " + numDisplayed);
             console.log("a : " + a);
             console.log("b : " + b);
@@ -116,6 +130,7 @@ $( document ).ready(function() {
             console.log("decimal : " + decimal);
             console.log("ndecimal : " + ndecimal);
             console.log("sign : " + sign);
+            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       }
 
       var isResult = function (id) {
@@ -141,47 +156,34 @@ $( document ).ready(function() {
             return false;
       }
 
-      var setNumbersOp = function () {
-            if (a == null) {
-                  a = numDisplayed;
-            } else {
-                  b = numDisplayed;
-            }
-            // console.log("a : " + a + " b : " + b);
-      }
-
-      var opOneOperand = function (id) {
+      var opOneOperand = function (id, op1) {
             var result = null;
 
             for (var i = 0 ; i < OPERATIONONE.length ; i++) {
                   if (OPERATIONONE[i][IDOP] == id){
                         var operation = OPERATIONONE[i][FUNCOP];
-                        result = operation(a);
-                        $("#text").text(OPERATIONONE[i][TEXT] + "(" + a + ") " + " = " + result);
-                        a = result;
+                        result = operation(op1);
+                        $("#text").text(OPERATIONONE[i][TEXT] + "(" + op1 + ") " + " = " + result);
                   }
             }
             return result;
       }
 
-      var opTwoOperands = function (id) {
+      var opTwoOperands = function (id, op1, op2) {
             var result = null;
 
             for (var i = 0 ; i < OPERATIONSTWO.length ; i++) {
                   if (OPERATIONSTWO[i][IDOP] == id){
                         var operation = OPERATIONSTWO[i][FUNCOP];
-                        result = operation(a , b);
-                        $("#text").text(a + " " + OPERATIONSTWO[i][TEXT] + " " + b +  " = " + result);
-                        a = result;
-                        b = null;
+                        result = operation(op1 , op2);
+                        $("#text").text(op1 + " " + OPERATIONSTWO[i][TEXT] + " " + op2 +  " = " + result);
                   }
             }
             return result;
       }
 
       var reset = function () {
-            a = b = null;
-            numDisplayed = 0;
+            a = b = numDisplayed = null;
             op = "?";
             sign = decimal = numb = false;
             ndecimal = BASE;
@@ -207,7 +209,11 @@ $( document ).ready(function() {
             }
       }
 
+      // Sale mal, siii cambio el signo de un resultado...
       var swapSign = function () {
+            if (numDisplayed == null) {
+                  numDisplayed = a;
+            }
             numDisplayed *= -1;
             a = numDisplayed;
             sign = !sign;
