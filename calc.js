@@ -77,11 +77,25 @@ $( document ).ready(function() {
             }
       }
 
+      var isOneOp = function (id) {
+            console.log("IS OP??");
+            for (var i = 0 ; i < OPERATIONONE.length ; i++) {
+                  console.log(OPERATIONONE[i][IDOP]);
+                  if (OPERATIONONE[i][IDOP] == id) {
+                        console.log(id);
+                        return true;
+                  }
+            }
+            return false;
+      }
+
       var makeOperation = function (id) {
             var result = null;
             setNumbersOp();
 
-            if (op != "?") {
+            if (opOneOperand(id)) {
+                  result = opOneOperand(id);
+            } else if (op != "?") {
                   result = opTwoOperands(op);
             }
             return result;
@@ -211,7 +225,7 @@ $( document ).ready(function() {
             } else if (numDisplayed != null) {
                   $( "#display" ).text(numDisplayed);
             } else {
-                  $( "#display" ).text("ERROR");
+                  $( "#display" ).text("0");
             }
       }
 
