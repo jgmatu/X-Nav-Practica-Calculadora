@@ -55,7 +55,6 @@ $( document ).ready(function() {
                   var number = $("#" + id).text();
 
                   if (op == EQUALS) {
-                        // I hate global variables.
                         reset();
                   }
                   numb = true;
@@ -93,33 +92,26 @@ $( document ).ready(function() {
             var result = null;
 
             if (a != null && numDisplayed == null) {
-                  // I hate global variables.
                   numDisplayed = a;
             }
 
             if ((numDisplayed == null || op == EQUALS) && !(isOneOp(id) || isOneOp(op))) {
-                  // I hate global variables.
                   return;
             }
             if (a == null) {
-                  // I hate global variables.
                   a = numDisplayed;
             } else {
-                  // I hate global variables.
                   b = numDisplayed;
             }
             if (isOneOp(id) && a != null) {
-                  // I hate global variables,
                   result = opOneOperand(id, a);
                   a = result;
             } else if (op != "?" && a != null && b != null) {
-                  // I hate global variables.
                   result = opTwoOperands(op, a, b);
                   a = result;
                   b = null;
             }
             if (numDisplayed != null && a == null) {
-                  // I hate global variables.
                   a = numDisplayed;
             }
 
@@ -127,7 +119,6 @@ $( document ).ready(function() {
       }
 
       var eraseInput = function () {
-            // I hate global variables.
             numDisplayed = null;
             sign = false;
             decimal = false;
@@ -193,7 +184,6 @@ $( document ).ready(function() {
       }
 
       var reset = function () {
-            // I hate global variables.
             a = b = numDisplayed = null;
             op = "?";
             sign = decimal = numb = false;
