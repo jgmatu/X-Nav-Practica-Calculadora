@@ -12,28 +12,26 @@ $( document ).ready(function() {
             event.preventDefault();
             var id = event.key;
 
+            eventOp(id);
+
             eventPi(id);
             eventNumb(id);
 
             eventCntrl(id);
             eventDecimals(id);
-
-            eventOp(id);
-
-            printState();
       });
 
 
       $( ".button" ).click(function() {
             var id = $(this).attr('id');
 
+            eventOp(id);
+
             eventPi(id);
             eventNumb(id);
 
             eventCntrl(id);
             eventDecimals(id);
-
-            eventOp(id);
       });
 
       var eventCntrl = function (id) {
@@ -43,7 +41,7 @@ $( document ).ready(function() {
       }
 
       var eventOp = function (id) {
-            if ((isOperate(id) || isResult(id))) {
+            if ((isOperate(id) || id == EQUALS) ) {
                   numDisplayed = makeOperation(id);
                   showDisplay();
                   eraseInput();
@@ -81,7 +79,6 @@ $( document ).ready(function() {
 
       var isOneOp = function (id) {
             for (var i = 0 ; i < OPERATIONONE.length ; i++) {
-                  console.log(OPERATIONONE[i][IDOP]);
                   if (OPERATIONONE[i][IDOP] == id) {
                         return true;
                   }
@@ -89,26 +86,33 @@ $( document ).ready(function() {
             return false;
       }
 
+      // We have lost the program...
+      // Not make global variables and not define struct data anymore....
       var makeOperation = function (id) {
             var result = null;
 
-            if (numDisplayed == null || op == EQUALS) {
-                  return;
+            if (a != null && numDisplayed == null) {
+                  numDisplayed = a;
             }
 
+            if ((numDisplayed == null || op == EQUALS) && !(isOneOp(id) || isOneOp(op))) {
+                  return;
+            }
             if (a == null) {
                   a = numDisplayed;
             } else {
                   b = numDisplayed;
             }
-
-            if (opOneOperand(id)) {
+            if (isOneOp(id) && a != null) {
                   result = opOneOperand(id, a);
                   a = result;
             } else if (op != "?" && a != null && b != null) {
                   result = opTwoOperands(op, a, b);
                   a = result;
-                  b = null
+                  b = null;
+            }
+            if (numDisplayed != null && a == null) {
+                  a = numDisplayed;
             }
             return result;
       }
@@ -131,10 +135,6 @@ $( document ).ready(function() {
             console.log("ndecimal : " + ndecimal);
             console.log("sign : " + sign);
             console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      }
-
-      var isResult = function (id) {
-            return id == EQUALS && op != EQUALS;
       }
 
       var isNumb = function (id) {
@@ -209,7 +209,6 @@ $( document ).ready(function() {
             }
       }
 
-      // Sale mal, siii cambio el signo de un resultado...
       var swapSign = function () {
             if (numDisplayed == null) {
                   numDisplayed = a;
