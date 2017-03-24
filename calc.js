@@ -41,7 +41,7 @@ $( document ).ready(function() {
       }
 
       var eventOp = function (id) {
-            if ((isOperate(id) || id == EQUALS) ) {
+            if ((isOperate(id) || id == EQUALS) && op != id) {
                   numDisplayed = makeOperation(id);
                   showDisplay();
                   eraseInput();
